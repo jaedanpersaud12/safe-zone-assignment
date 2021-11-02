@@ -19,14 +19,6 @@ p {
   font-size: 60px;
 }
 
-.header-logo {
-  width: 15%;
-}
-
-.logo {
-  background-image: url("images/logo.png")
-}
-
 .header-menu {
   font-weight: bold;
   list-style: none;
@@ -48,11 +40,11 @@ nav {
   padding: 55px 50px;
   height: 80px;
   background-color: #fcfcfc;
-  top: 20px;
-  position: fixed !important;
+  top: 0px;
+  left: 0px;
+  position: fixed;
   z-index: 1000;
   width: 100%;
-  top: 0;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
