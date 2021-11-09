@@ -41,12 +41,12 @@ var vaccCard = {
       var daysMessage = " day";
     } else {
       var daysMessage = " days";
-    }
+    } //checks if the number of days is a 1. if it is, the word becomes singular.
 
-    if (expired == false) {
-      if (idCard.name == vaccCard.name) {
-        if (vaccCard.vaccinated == true) {
-          if (date >= 14) {
+    if (expired == false) { //checks if the patrons id card has expired
+      if (idCard.name == vaccCard.name) { //checks if the name on the ID card matches that on the vaccination card
+        if (vaccCard.vaccinated == true) { //checks if a patron has been fully vaccinated
+          if (date >= 14) { //checks if 14 days has elapsed since their last shot.
             var message = "You've been fully vaccinated!";
             return message;
           } else {
@@ -68,7 +68,9 @@ var vaccCard = {
   }
 };
 
+//takes the return from the checkVaccination function and puts it in a variable "message"
 var message = vaccCard.checkVaccination();
 
+//finds the id "message" in the HTML and replaces it with the "message" variable.
 var messageEl = document.getElementById("message");
 messageEl.textContent = message;
