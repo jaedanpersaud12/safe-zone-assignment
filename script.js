@@ -15,11 +15,11 @@ function idCard(patronName, expiryDate) {
   this.expired = this.checkExpiry();
 }
 
-var patronID1 = new idCard('Jaedan Persaud', '2024-01-11');
-var patronID2 = new idCard('Ethan Lalla', '2023-01-11');
-var patronID3 = new idCard('Christine Heath', '2020-01-11');
-var patronID4 = new idCard('Joshua Ramkissoon', '2024-01-11');
-var patronID5 = new idCard('Matthew Eligon', '2023-01-11');
+var patronID1 = new idCard('Jaedan Persaud', '2024/01/11');
+var patronID2 = new idCard('Ethan Lalla', '2023/01/11');
+var patronID3 = new idCard('Christine Heath', '2020/01/11');
+var patronID4 = new idCard('Joshua Ramkissoon', '2024/01/11');
+var patronID5 = new idCard('Matthew Eligon', '2023/01/11');
 
 
 var idCardArray = [patronID1, patronID2, patronID3, patronID4, patronID5];
@@ -71,42 +71,11 @@ function vaccCard(patronName, date, vaccinated) {
     }
   };
 
-  this.access = function(index) {
-    var date = this.checkDifference();
-
-    var daysUntil = 14 - date;
-
-    if (daysUntil == 1) {
-      daysMessage = " day";
-    } else {
-      daysMessage = " days";
-    }
-
-    if (idCardArray[index].expired == false) {
-      if (idCardArray[index].name == this.name) {
-        if (this.vaccinated == true) {
-          if (date >= 14) {
-            return "Allowed";
-          } else {
-            return "Denied";
-          }
-        } else {
-          return "Denied";
-        }
-      } else {
-        return "Denied";
-      }
-    } else {
-      return "Denied";
-    }
-  };
-}
-
-var patronVacc1 = new vaccCard('Jaedan Persaud', '2021-9-11', true);
+var patronVacc1 = new vaccCard('Jaedan Persaud', '2021/09/11', true);
 var patronVacc2 = new vaccCard('Ethan Lalla', undefined, false);
-var patronVacc3 = new vaccCard('Christine Heath', '2021-11-11', true);
-var patronVacc4 = new vaccCard('Josh Ramkissoon', '2021-01-11', true);
-var patronVacc5 = new vaccCard('Matthew Eligon', '2021-11-19', true);
+var patronVacc3 = new vaccCard('Christine Heath', '2021/11/11', true);
+var patronVacc4 = new vaccCard('Josh Ramkissoon', '2021/01/11', true);
+var patronVacc5 = new vaccCard('Matthew Eligon', '2021/11/19', true);
 
 var vaccCardArray = [patronVacc1, patronVacc2, patronVacc3, patronVacc4, patronVacc5];
 
