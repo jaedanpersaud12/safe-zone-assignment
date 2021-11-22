@@ -1,94 +1,119 @@
-// Created Object in constructor notation for idCard object and defined some properties and a method to check if the expiry date on the ID Card has passed.
-var idCard = new Object();
-idCard.name = 'Jaedan Persaud',
-  idCard.expiryDate = new Date('Jan 1, 2024, 00:00:00'),
-  idCard.today = new Date(),
-  idCard.checkExpiry = function() {
-    var difference = idCard.today.getTime() - idCard.expiryDate.getTime();
+function idCard(patronName, expiryDate) {
+  this.name = patronName;
+  this.expiryDate = new Date(expiryDate);
+  this.today = new Date();
+  this.checkExpiry = function() {
+    var difference = this.today.getTime() - this.expiryDate.getTime();
     var sign = Math.sign(difference)
     if (sign == -1) {
       return false;
     } else if (sign == 1) {
       return true;
     }
-  };
+  }
+  this.expired = this.checkExpiry();
+}
 
-//returned value from method and declared it in a variable "expired"
-var expired = idCard.checkExpiry();
+var patronID1 = new idCard('Jaedan Persaud', '2024-01-11');
+var patronID2 = new idCard('Ethan Lalla', '2023-01-11');
+var patronID3 = new idCard('Christine Heath', '2020-01-11');
+var patronID4 = new idCard('Joshua Ramkissoon', '2024-01-11');
+var patronID5 = new idCard('Matthew Eligon', '2023-01-11');
 
-//created object in literal notation for the vaccination card object and defined some properties and 2 methods;
-var vaccCard = {
-  name: 'Jaedan Persaud',
-  vaccinationType: 'J&J',
-  secondDose: new Date('Nov 5, 2021 12:00:00'),
-  vaccinated: true,
 
-  //one method to check the difference between 2 dates; the day the patron took his last, and final, vaccination shot and today. to determine if 14 days has elapsed since then.
-  checkDifference: function() {
+var idCardArray = [patronID1, patronID2, patronID3, patronID4, patronID5];
+
+function vaccCard(patronName, date, vaccinated) {
+  this.name = patronName;
+  this.secondDose = new Date(date);
+  this.vaccinated = vaccinated;
+  this.checkDifference = function() {
     var today = new Date();
-    var difference = today.getTime() - vaccCard.secondDose.getTime();
+    var difference = today.getTime() - this.secondDose.getTime();
     difference = Math.floor(difference / 86400000);
     return difference;
-  },
+  }
 
-  //the second method is to run through a set of conditions based on given information to determine if a patron meets all criteria to enter the safe zone.
-  checkVaccination: function() {
-    var date = vaccCard.checkDifference();
+
+  this.checkVaccination = function(index) {
+    var date = this.checkDifference();
 
     var daysUntil = 14 - date;
 
     if (daysUntil == 1) {
-      var daysMessage = " day";
+      daysMessage = " day";
     } else {
-      var daysMessage = " days";
-    } //checks if the number of days is a 1. if it is, the word becomes singular.
+      daysMessage = " days";
+    }
 
-    if (expired == false) { //checks if the patrons id card has expired
-      if (idCard.name == vaccCard.name) { //checks if the name on the ID card matches that on the vaccination card
-        if (vaccCard.vaccinated == true) { //checks if a patron has been fully vaccinated
-          if (date >= 14) { //checks if 14 days has elapsed since their last shot.
-            var message = "You've been fully vaccinated!";
+    if (idCardArray[index].expired == false) {
+      if (idCardArray[index].name == this.name) {
+        if (this.vaccinated == true) {
+          if (date >= 14) {
+            var message = "Fully Vaccinated.";
             return message;
           } else {
-            var message = "You have " + daysUntil + daysMessage + " until you are allowed entry.";
+            var message = daysUntil + daysMessage + " until allowed entry.";
             return message;
           }
         } else {
-          var message = "You have not been vaccinated. You cannot enter.";
+          var message = "Not Vaccinated.";
           return message;
         }
       } else {
-        var message = "The name on the ID card does not match the name on the vaccine card. You cannot enter.";
+        var message = "Name on ID does not match vaccine card.";
         return message;
       }
     } else {
-      var message = "Your ID Card has expired. You cannot enter.";
+      var message = "ID card expired.";
       return message;
     }
-  }
-};
+  };
 
-//takes the return from the checkVaccination function and puts it in a variable "message"
-var message = vaccCard.checkVaccination();
+  this.access = function(index) {
+    var date = this.checkDifference();
 
-//finds the id "message" in the HTML and replaces it with the "message" variable.
-var messageEl = document.getElementById("message");
-messageEl.textContent = message;
+    var daysUntil = 14 - date;
 
-/*i may have gone a bit overboard.
-⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆
-⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿
-⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀
-⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀
-⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀ 
-⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉
-*/
+    if (daysUntil == 1) {
+      daysMessage = " day";
+    } else {
+      daysMessage = " days";
+    }
+
+    if (idCardArray[index].expired == false) {
+      if (idCardArray[index].name == this.name) {
+        if (this.vaccinated == true) {
+          if (date >= 14) {
+            return "Allowed";
+          } else {
+            return "Denied";
+          }
+        } else {
+          return "Denied";
+        }
+      } else {
+        return "Denied";
+      }
+    } else {
+      return "Denied";
+    }
+  };
+}
+
+var patronVacc1 = new vaccCard('Jaedan Persaud', '2021-9-11', true);
+var patronVacc2 = new vaccCard('Ethan Lalla', undefined, false);
+var patronVacc3 = new vaccCard('Christine Heath', '2021-11-11', true);
+var patronVacc4 = new vaccCard('Josh Ramkissoon', '2021-01-11', true);
+var patronVacc5 = new vaccCard('Matthew Eligon', '2021-11-19', true);
+
+var vaccCardArray = [patronVacc1, patronVacc2, patronVacc3, patronVacc4, patronVacc5];
+
+var vaccArrayLength = vaccCardArray.length;
+for (var i = 0; i < vaccArrayLength; i++) {
+  document.write("<tr>")
+  document.write("<td>", idCardArray[i].name, "</td>")
+  document.write("<td>", vaccCardArray[i].checkVaccination(i), "</td>")
+  document.write("<td>", vaccCardArray[i].access(i), "</td>")
+  document.write("</tr>")
+}
