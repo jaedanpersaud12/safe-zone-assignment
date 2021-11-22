@@ -1,8 +1,9 @@
+//create object template for id card
 function idCard(patronName, expiryDate) {
   this.name = patronName;
   this.expiryDate = new Date(expiryDate);
   this.today = new Date();
-  this.checkExpiry = function() {
+  this.checkExpiry = function() { //method 
     var difference = this.today.getTime() - this.expiryDate.getTime();
     var sign = Math.sign(difference)
     if (sign == -1) {
@@ -114,6 +115,6 @@ for (var i = 0; i < vaccArrayLength; i++) {
   document.write("<tr>")
   document.write("<td>", idCardArray[i].name, "</td>")
   document.write("<td>", vaccCardArray[i].checkVaccination(i), "</td>")
-  document.write("<td>", vaccCardArray[i].access(i), "</td>")
+  //document.write("<td>", vaccCardArray[i].access(i), "</td>")
   document.write("</tr>")
 }
